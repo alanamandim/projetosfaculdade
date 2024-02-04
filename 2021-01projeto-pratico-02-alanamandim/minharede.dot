@@ -1,0 +1,48 @@
+graph Rede{
+label = "Rede Compartilhada"
+labelloc = "t";
+
+ node [labelloc=c fontsize=10 shape=none]
+server [ image="img/cloud.png"; label="server WWW"; ]
+router [ image="img/blue-router.png"; label="roteador"; ]
+desktop2 [ image="img/desktop.png"; label="desktop"; ]
+wan [ image="img/cloud.png"; label="Internet"; ]
+desktop3 [ image="img/desktop.png"; label="desktop"; ]
+desktop1 [ image="img/desktop.png"; label="desktop"; ]
+sw1 [ image="img/switch.png"; label="switch"; ]
+
+
+wan--router
+router--sw1
+sw1--server
+sw1--desktop1
+sw1--desktop2
+sw1--desktop3
+
+subgraph cluster_dmz{
+    label = "DMZ"
+    labelloc=b
+    fontsize=10
+    style=filled;
+    bgcolor=lightyellow;
+
+    server
+
+}
+
+subgraph cluster_lan{
+    label = "LAN"
+    labelloc=b
+    fontsize=10
+    style=filled;
+    bgcolor=lightyellow;
+
+    desktop2
+    desktop3
+    desktop1
+
+}
+
+
+}
+

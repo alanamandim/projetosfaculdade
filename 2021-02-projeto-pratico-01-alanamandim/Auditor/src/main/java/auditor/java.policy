@@ -1,0 +1,5 @@
+grant{
+permission java.security.AllPermission;
+}
+javac auditor/Auditor.java
+java -Djava.security.policy=java.policy auditor.Auditor 127.0.0.1 12345

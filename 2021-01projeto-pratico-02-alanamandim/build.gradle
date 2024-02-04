@@ -1,0 +1,31 @@
+plugins {
+    id 'application'
+    id 'java'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+application {
+    setMainClassName('poo.Principal')
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+}
+
+test {
+    useJUnitPlatform()
+}
+// Gerando jar
+jar {
+    manifest {
+        // Classe principal da aplicação
+        attributes "Main-Class": "poo.Principal"
+    }
+}

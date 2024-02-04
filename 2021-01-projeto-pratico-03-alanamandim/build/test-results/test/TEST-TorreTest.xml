@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="TorreTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2021-09-12T14:20:59" hostname="alana-Inspiron-5480" time="0.014">
+  <properties/>
+  <testcase name="movimentoTeste()" classname="TorreTest" time="0.014"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

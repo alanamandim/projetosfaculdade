@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="GrafoTeste" tests="3" skipped="0" failures="0" errors="0" timestamp="2021-08-26T22:07:33" hostname="alana-Inspiron-5480" time="0.053">
+  <properties/>
+  <testcase name="testeaddArco()" classname="GrafoTeste" time="0.047"/>
+  <testcase name="testeRemoveArco()" classname="GrafoTeste" time="0.002"/>
+  <testcase name="testeAddEquipa()" classname="GrafoTeste" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,1731 @@
+openapi: '3.0.2'
+info:
+  title: Sistema de Automação Residencial
+  version: '1.0'
+servers:
+  - url: https://localhost:8080/
+paths:
+  /ambiente:
+    get:
+      summary: Listar todos os ambientes da "casa"
+      description: Retorna a lista de todos os ambientes do Sistema
+      operationId: listar_ambientes
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    nome_ambiente:
+                      type: string
+                    Dispositivos:
+                      items:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id: 
+                              type: integer
+                            nome:
+                              type: string
+                            luminosidade:
+                              type: integer
+                    
+        '400':
+          description: Requisição inválida
+   
+
+  /ambiente/{nome_ambiente}:
+    get:
+      summary: Buscar ambiente pelo nome_ambiente
+      description: Retorna o ambiente pelo nome_ambiente
+      operationId: obterAmbiente
+      parameters:
+      - name: nome_ambiente
+        in: path
+        description: nome_ambiente a ser retornado
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+           description: OK
+           content:
+            application/json:
+              schema:
+                  type: object
+                  properties:
+                    nome_ambiente:
+                      type: string
+                    Dispositivos:
+                      items:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id: 
+                              type: integer
+                            nome:
+                              type: string
+                            luminosidade:
+                              type: integer
+        400:
+          description: nome_ambiente inválido
+          content: {}
+        404:
+          description: ambiente não encontrado 
+    post:
+      summary: 'Cadastra um novo ambiente'
+      operationId: adicionaAmbiente
+      parameters:
+      - name: nome_ambiente
+        in: path
+        description: nome_ambiente a ser criado
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+           description: OK
+           content:
+            application/json:
+              schema:
+                  type: object
+                  properties:
+                    nome_ambiente:
+                      type: string
+                    Dispositivos:
+                      items:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id: 
+                              type: integer
+                            nome:
+                              type: string
+                            luminosidade:
+                              type: integer
+        405:
+          description: Entrada inválida
+    
+    put:
+      summary: Edita nome do ambiente
+      description: Atualiza os dados de um ambiente pelo nome
+      operationId: atualizarAmbiente
+      parameters:
+      - name: nome_ambiente
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: nome
+        in: query  
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+           description: OK
+           content:
+            application/json:
+              schema:
+                  type: object
+                  properties:
+                    nome_ambiente:
+                      type: string
+                    Dispositivos:
+                      items:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id: 
+                              type: integer
+                            nome:
+                              type: string
+                            luminosidade:
+                              type: integer
+        405:
+          description: Invalid input
+    
+    delete:
+      summary: Exclui um ambiente
+      description: Apaga um livro pelo nome
+      operationId: excluirAmbiente
+      parameters:
+      - name: nome_ambiente
+        in: path
+        description: nome do ambiente a ser removido
+        required: true
+        schema:
+          type: string
+      responses:
+        400:
+          description: Código inválido
+          content: {}
+        404:
+          description: Livro não encontrado
+   
+  /dispositivos:
+    get:
+      summary: Listar todos os  tipos de dispositivos do Sistema
+      description: Retorna a lista de todos os tipos dispositivos do Sistema
+      operationId: obterTodosDispositivos
+      responses:
+        '200':
+           description: OK
+           content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    nome_ambiente:
+                      type: string
+                    Dispositivos:
+                      items:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id: 
+                              type: integer
+                            nome:
+                              type: string
+                            luminosidade:
+                              type: integer
+        '400':
+          description: Requisição inválida
+    
+  
+    
+
+  /dispositivos/{id}:
+    get:
+      summary: Busca dispositivo pelo id
+      description: Retorna o dispositivo pelo id
+      operationId: obterDispositivoPeloId
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+             schema:
+              type: object
+              properties:
+                id:
+                  type: integer
+                nome:
+                  type: string
+                luminosidade:  
+                   type: integer
+        400:
+          description: id inválido
+          content: {}
+        404:
+          description: dispositivo não encontrado 
+
+  /dispositivos/lampada/{id}:  
+    put:
+      summary: Altera o estado do dispositivo tipo lampada informado
+      description: realiza uma ação
+      operationId: atualizarDispositivoLampada
+      parameters:
+      - name: id
+        in: path
+        description: id do dispositivo a ser mexido
+        required: true
+        schema:
+         type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: integer
+                nome:
+                  type: string
+                
+                luminosidade:
+                   type: integer
+                ligar:
+                  type: boolean
+        required: true
+      responses:
+        '400':
+           description: OK
+           content:
+            application/json:
+              schema:
+                  type: object
+                  properties:
+                    nome_ambiente:
+                      type: string
+                    Dispositivos:
+                      items:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id: 
+                              type: integer
+                            nome:
+                              type: string
+                            luminosidade:
+                              type: integer
+      
+       
+        405:
+          description: Invalid input
+  /dispositivos/cortina/{id}:  
+    put:
+      summary: Altera o estado do dispositivo tipo cortina informado
+      description: realiza uma ação
+      operationId: atualizarDispositivoCortina
+      parameters:
+      - name: id
+        in: path
+        description: id do dispositivo a ser mexido
+        required: true
+        schema:
+         type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: integer
+                nome:
+                  type: string
+                aberta:
+                   type: boolean
+        required: true
+      responses:
+        405:
+          description: Invalid input
+  
+  /dispositivos/televisao/{id}:  
+    put:
+      summary: Altera o estado do dispositivo tipo televisao informado
+      description: realiza uma ação
+      operationId: atualizarDispositivotelevisao
+      parameters:
+      - name: id
+        in: path
+        description: id do dispositivo a ser mexido
+        required: true
+        schema:
+         type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: integer
+                nome:
+                  type: string
+                
+                canal:
+                   type: integer
+                volume:
+                   type: integer
+                ligar:
+                  type: boolean
+        required: true
+      responses:
+        '400':
+           description: OK
+           content:
+            application/json:
+              schema:
+                  type: object
+                  properties:
+                    nome_ambiente:
+                      type: string
+                    Dispositivos:
+                      items:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id: 
+                              type: integer
+                            nome:
+                              type: string
+                            canal:
+                              type: integer
+                            volume:
+                              type: integer
+                            ligar:
+                              type: boolean
+        405:
+          description: Invalid input
+
+  /dispositivos/som/{id}:  
+    put:
+      summary: Altera o estado do dispositivo tipo som informado
+      description: realiza uma ação
+      operationId: atualizarDispositivosom
+      parameters:
+      - name: id
+        in: path
+        description: id do dispositivo a ser mexido
+        required: true
+        schema:
+         type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: integer
+                nome:
+                  type: string
+                volume:
+                   type: integer
+                estacao:
+                   type: integer
+                ligar:
+                  type: boolean
+        required: true
+      responses:
+        '400':
+           description: OK
+           content:
+            application/json:
+              schema:
+                  type: object
+                  properties:
+                    nome_ambiente:
+                      type: string
+                    Dispositivos:
+                      items:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id: 
+                              type: integer
+                            nome:
+                              type: string
+                            volume:
+                              type: integer
+                            canal:
+                              type: integer
+                            ligar:
+                              type: boolean
+        405:
+          description: Invalid input
+
+  /dispositivos/arcondicionado/{id}:  
+    put:
+      summary: Altera o estado do dispositivo tipo arcondicionado informado
+      description: realiza uma ação
+      operationId: atualizarDispositivoarcondicionado
+      parameters:
+      - name: id
+        in: path
+        description: id do dispositivo a ser mexido
+        required: true
+        schema:
+         type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: integer
+                nome:
+                  type: string
+                modo:
+                   type: integer
+                temperatura:
+                   type: integer
+                ligar:
+                  type: boolean
+        required: true
+      responses:
+        '400':
+           description: OK
+           content:
+            application/json:
+              schema:
+                  type: object
+                  properties:
+                    nome_ambiente:
+                      type: string
+                    Dispositivos:
+                      items:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id: 
+                              type: integer
+                            nome:
+                              type: string
+                            MODO:
+                              type: integer
+                            temperatura:
+                              type: integer
+                            ligar:
+                              type: boolean
+        405:
+          description: Invalid input
+  /dispositivos/portao/{id}:  
+    put:
+      summary: Altera o estado do dispositivo tipo portao informado
+      description: realiza uma ação
+      operationId: atualizarDispositivoportao
+      parameters:
+      - name: id
+        in: path
+        description: id do dispositivo a ser mexido
+        required: true
+        schema:
+         type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: integer
+                nome:
+                  type: string
+                aberto:
+                  type: boolean
+        required: true
+      responses:
+        '400':
+           description: OK
+           content:
+            application/json:
+              schema:
+                  type: object
+                  properties:
+                    nome_ambiente:
+                      type: string
+                    Dispositivos:
+                      items:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id: 
+                              type: integer
+                            nome:
+                              type: string
+                            aberto:
+                              type: boolean
+        405:
+          description: Invalid input
+
+  /cenario:
+    get:
+      summary: Listar todos os cenarios da casa
+      description: Retorna a lista de todos os ambientes do Sistema
+      operationId: listar_cenarios
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    nome_cenario:
+                      type: string
+                    inicio:
+                      type: integer
+                    fim:
+                      type: integer
+                    Dispositivos:
+                      items:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id: 
+                              type: integer
+                            nome:
+                              type: string
+                            luminosidade:
+                              type: integer
+                    
+        '400':
+          description: Requisição inválida
+   
+
+  /cenario/{nome_cenario}:
+    get:
+      summary: Buscar cenario pelo nome_cenario
+      description: Retorna o o objeto cenário informado
+      operationId: listar_cenarios
+      parameters:
+      - name: nome_cenario
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+           description: OK
+           content:
+            application/json:
+              schema:
+                  type: object
+                  properties:
+                    nome_cenario:
+                      type: string
+                    inicio:
+                      type: integer
+                    fim:
+                      type: integer
+                    Dispositivos:
+                      items:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id: 
+                              type: integer
+                            nome:
+                              type: string
+                            luminosidade:
+                              type: integer
+        400:
+          description: nome_cenario inválido
+          content: {}
+        404:
+          description: cenario não encontrado 
+    put:
+      summary: Edita o cenario
+      description: Atualiza os dados de um cenario 
+      operationId: atualizarCenario
+      parameters:
+      - name: nome_cenario
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: nome
+        in: query  
+        required: true
+        schema:
+          type: string
+      - name: inicio
+        in: query  
+        required: true
+        schema:
+          type: integer
+      - name: fim
+        in: query  
+        required: true
+        schema:
+          type: integer
+      responses:
+        200:
+           description: OK
+           content:
+            application/json:
+              schema:
+                  type: object
+                  properties:
+                    nome_cenario:
+                      type: string
+                    inicio:
+                      type: integer
+                    fim:
+                      type: integer
+                    Dispositivos:
+                      items:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id: 
+                              type: integer
+                            nome:
+                              type: string
+                            luminosidade:
+                              type: integer
+        405:
+          description: Invalid input
+    
+    delete:
+      summary: Exclui um cenario
+      description: Apaga o objeto cenário informado
+      operationId: excluirCenario
+      parameters:
+      - name: nome_cenario
+        in: path
+        description: nome do cenario a ser removido
+        required: true
+        schema:
+          type: string
+      responses:
+        400:
+          description: Código inválido
+          content: {}
+        404:
+          description: cenario não encontrado
+
+  /cenario/{nome_cenario}/{inicio}/{fim}:
+    post:
+      summary: Cadastra um novo cenario
+      operationId: adicionaCenario
+      parameters:
+      - name: nome_cenario
+        in: path
+        description: nome do cenario a ser criado
+        required: true
+        schema:
+          type: string
+      - name: inicio
+        in: path
+        required: true
+        schema:
+          type: integer
+      - name: fim
+        in: path  
+        required: true
+        schema:
+          type: integer
+      responses:
+        200:
+           description: OK
+           content:
+            application/json:
+              schema:
+                  type: object
+                  properties:
+                    nome_ambiente:
+                      type: string
+                    Dispositivos:
+                      items:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id: 
+                              type: integer
+                            nome:
+                              type: string
+                            luminosidade:
+                              type: integer
+        405:
+          description: Entrada inválida
+  /ambiente/{nome_ambiente}/dispositivos:
+    get:
+      summary: Buscar todos os dispositivos pertencentes ao ambiente informado
+      description: Retorna uma lista com todos os dispositivos daquele ambiente
+      operationId: obterTodosDispositivos
+      parameters:
+      - name: nome_ambiente
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+           description: OK
+           content:
+            application/json:
+              schema:
+                  type: object
+                  properties:
+                    nome_ambiente:
+                      type: string
+                    Dispositivos:
+                      items:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id: 
+                              type: integer
+                            nome:
+                              type: string
+                            luminosidade:
+                              type: integer
+                            ligar: 
+                              type: boolean
+        400:
+          description: nome_ambiente inválido
+          content: {}
+        404:
+          description: ambiente não encontrado 
+    post:
+      summary: Cadastra um dispositivo no ambiente específico
+      operationId: adicionaEquipamento
+      parameters:
+      - name: nome_ambiente
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: query
+        required: true
+        schema:
+          type: integer
+
+      responses:
+        200:
+           description: OK
+           content:
+            application/json:
+              schema:
+                  type: object
+                  properties:
+                    nome_ambiente:
+                      type: string
+                    Dispositivos:
+                      items:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id: 
+                              type: integer
+                            nome:
+                              type: string
+                            luminosidade:
+                              type: integer
+                            ligar:
+                              type: boolean
+        405:
+          description: Entrada inválida
+    delete:
+      summary: Exclui o dispositivo do ambiente
+      description: Apaga o objeto dispositivo informado
+      operationId: excluirDispositivo
+      parameters:
+      - name: nome_ambiente
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: query
+        required: true
+        schema:
+          type: integer
+      responses:
+        400:
+          description: Código inválido
+          content: {}
+        404:
+          description: cenario não encontrado
+  /ambiente/{nome_ambiente}/dispositivos/:
+     get:
+      summary: Busca todas os dispositivo_tipo1 do ambiente informado
+      description: Retorna todos dispositivo_tipo1 do ambiente informado
+      operationId: busca_dispt1_no_ambiente
+      parameters:
+      - name: nome_ambiente
+        in: path
+        description: ambiente a ser retornado
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: OK
+          content:
+           application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    nome:
+                      type: string
+                    id:
+                      type: integer
+                    luminosidade:
+                      type: integer
+                    ligar:
+                      type: boolean
+        400:
+          description: id inválido
+          content: {}
+        404:
+          description: lampada não encontrado 
+  /ambiente/{nome_ambiente}/dispositivos/lampada/{id}:  
+    put:
+      summary: Altera o estado do dispositivo tipo lampada informado
+      description: realiza uma ação
+      operationId: atualizarDispositivoLampada
+      parameters:
+      - name: id
+        in: path
+        description: id do dispositivo a ser mexido
+        required: true
+        schema:
+         type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: integer
+                nome:
+                  type: string
+                
+                luminosidade:
+                   type: integer
+                ligar:
+                  type: boolean
+        required: true
+      responses:
+        '400':
+           description: OK
+           content:
+            application/json:
+              schema:
+                  type: object
+                  properties:
+                    nome_ambiente:
+                      type: string
+                    Dispositivos:
+                      items:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id: 
+                              type: integer
+                            nome:
+                              type: string
+                            luminosidade:
+                              type: integer
+      
+       
+        405:
+          description: Invalid input
+  /ambiente/{nome_ambiente}/dispositivos/cortina/{id}:  
+    put:
+      summary: Altera o estado do dispositivo tipo cortina informado
+      description: realiza uma ação
+      operationId: atualizarDispositivoCortina
+      parameters:
+      - name: id
+        in: path
+        description: id do dispositivo a ser mexido
+        required: true
+        schema:
+         type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: integer
+                nome:
+                  type: string
+                aberta:
+                   type: boolean
+        required: true
+      responses:
+        405:
+          description: Invalid input
+  
+  /ambiente/{nome_ambiente}/dispositivos/televisao/{id}:  
+    put:
+      summary: Altera o estado do dispositivo tipo televisao informado
+      description: realiza uma ação
+      operationId: atualizarDispositivotelevisao
+      parameters:
+      - name: id
+        in: path
+        description: id do dispositivo a ser mexido
+        required: true
+        schema:
+         type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: integer
+                nome:
+                  type: string
+                
+                canal:
+                   type: integer
+                volume:
+                   type: integer
+                ligar:
+                  type: boolean
+        required: true
+      responses:
+        '400':
+           description: OK
+           content:
+            application/json:
+              schema:
+                  type: object
+                  properties:
+                    nome_ambiente:
+                      type: string
+                    Dispositivos:
+                      items:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id: 
+                              type: integer
+                            nome:
+                              type: string
+                            canal:
+                              type: integer
+                            volume:
+                              type: integer
+                            ligar:
+                              type: boolean
+        405:
+          description: Invalid input
+
+  /ambiente/{nome_ambiente}/dispositivos/som/{id}:  
+    put:
+      summary: Altera o estado do dispositivo tipo som informado
+      description: realiza uma ação
+      operationId: atualizarDispositivosom
+      parameters:
+      - name: id
+        in: path
+        description: id do dispositivo a ser mexido
+        required: true
+        schema:
+         type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: integer
+                nome:
+                  type: string
+                volume:
+                   type: integer
+                estacao:
+                   type: integer
+                ligar:
+                  type: boolean
+        required: true
+      responses:
+        '400':
+           description: OK
+           content:
+            application/json:
+              schema:
+                  type: object
+                  properties:
+                    nome_ambiente:
+                      type: string
+                    Dispositivos:
+                      items:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id: 
+                              type: integer
+                            nome:
+                              type: string
+                            volume:
+                              type: integer
+                            canal:
+                              type: integer
+                            ligar:
+                              type: boolean
+        405:
+          description: Invalid input
+
+  /ambiente/{nome_ambiente}/dispositivos/arcondicionado/{id}:  
+    put:
+      summary: Altera o estado do dispositivo tipo arcondicionado informado
+      description: realiza uma ação
+      operationId: atualizarDispositivoarcondicionado
+      parameters:
+      - name: id
+        in: path
+        description: id do dispositivo a ser mexido
+        required: true
+        schema:
+         type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: integer
+                nome:
+                  type: string
+                modo:
+                   type: integer
+                temperatura:
+                   type: integer
+                ligar:
+                  type: boolean
+        required: true
+      responses:
+        '400':
+           description: OK
+           content:
+            application/json:
+              schema:
+                  type: object
+                  properties:
+                    nome_ambiente:
+                      type: string
+                    Dispositivos:
+                      items:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id: 
+                              type: integer
+                            nome:
+                              type: string
+                            MODO:
+                              type: integer
+                            temperatura:
+                              type: integer
+                            ligar:
+                              type: boolean
+        405:
+          description: Invalid input
+  /ambiente/{nome_ambiente}/dispositivos/portao/{id}:  
+    put:
+      summary: Altera o estado do dispositivo tipo portao informado
+      description: realiza uma ação
+      operationId: atualizarDispositivoportao
+      parameters:
+      - name: id
+        in: path
+        description: id do dispositivo a ser mexido
+        required: true
+        schema:
+         type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+                type: object
+                properties:
+                  nome_ambiente:
+                    type: string
+                  Dispositivos:
+                    items:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          nome:
+                            type: string
+                          aberto:
+                            type: boolean
+         
+      responses:
+        '400':
+           description: OK
+           content:
+            application/json:
+              schema:
+                  type: object
+                  properties:
+                    nome_ambiente:
+                      type: string
+                    Dispositivos:
+                      items:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id: 
+                              type: integer
+                            nome:
+                              type: string
+                            aberto:
+                              type: boolean
+        405:
+          description: Invalid input
+
+  /cenario/{nome_cenario}/dispositivos:
+    get:
+      summary: Buscar todos os dispositivos pertencentes ao cenario informado
+      description: Retorna uma lista com todos os dispositivos daquele cenario
+      operationId: obterTodosDispositivos
+      parameters:
+      - name: nome_cenario
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+           description: OK
+           content:
+            application/json:
+              schema:
+                  type: object
+                  properties:
+                    Dispositivos:
+                      items:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id: 
+                              type: integer
+                            nome:
+                              type: string
+                            luminosidade:
+                              type: integer
+                            ligar: 
+                              type: boolean
+        400:
+          description: nome_cenario inválido
+          content: {}
+        404:
+          description: cenario não encontrado 
+    post:
+      summary: Cadastra um dispositivo no cenario específico
+      operationId: adicionaEquipamento
+      parameters:
+      - name: nome_cenario
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: query
+        required: true
+        schema:
+          type: integer
+
+      responses:
+        200:
+           description: OK
+           content:
+            application/json:
+              schema:
+                  type: object
+                  properties:
+                    nome_cenario:
+                      type: string
+                    inicio:
+                      type: integer
+                    fim:
+                      type: integer
+                    Dispositivos:
+                      items:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id: 
+                              type: integer
+                            nome:
+                              type: string
+                            luminosidade:
+                              type: integer
+                            ligar:
+                              type: boolean
+        405:
+          description: Entrada inválida
+    delete:
+      summary: Exclui o dispositivo do cenario
+      description: Apaga o objeto dispositivo informado
+      operationId: excluirDispositivo
+      parameters:
+      - name: nome_ambiente
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: query
+        required: true
+        schema:
+          type: integer
+      responses:
+        400:
+          description: Código inválido
+          content: {}
+        404:
+          description: cenario não encontrado
+  /cenario/{nome_cenario}/dispositivos/:
+     get:
+      summary: Busca todas o dispositivo do cenario informado
+      description: Retorna o dispositivo do cenario informado
+      operationId: buscaDispositivo
+      parameters:
+      - name: nome_cenario
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: OK
+          content:
+           application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    nome:
+                      type: string
+                    id:
+                      type: integer
+                    luminosidade:
+                      type: integer
+                    ligar:
+                      type: boolean
+        400:
+          description: id inválido
+          content: {}
+        404:
+          description: lampada não encontrado 
+  /cenario{nome_cenario}/dispositivos/lampada/{id}:  
+    put:
+      summary: Altera o estado do dispositivo tipo lampada informado
+      description: realiza uma ação
+      operationId: atualizarDispositivoLampada
+      parameters:
+      - name: nome_cenario
+        in: path
+        required: true
+        schema:
+         type: integer
+      - name: id
+        in: query
+        required: true
+        schema:
+         type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: integer
+                nome:
+                  type: string
+                
+                luminosidade:
+                   type: integer
+                ligar:
+                  type: boolean
+        required: true
+      responses:
+        '200':
+           description: OK
+           content:
+            application/json:
+              schema:
+                  type: object
+                  properties:
+                    nome_cenario:
+                      type: string
+                    inicio:
+                      type: integer
+                    fim:
+                      type: integer
+                    Dispositivos:
+                      items:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id: 
+                              type: integer
+                            nome:
+                              type: string
+                            luminosidade:
+                              type: integer
+       
+        405:
+          description: Invalid input
+  /cenario/{nome_cenario}/dispositivos/cortina/{id}:  
+    put:
+      summary: Altera o estado do dispositivo tipo cortina informado
+      description: realiza uma ação
+      operationId: atualizarDispositivoCortina
+      parameters:
+      - name: nome_cenario
+        in: path
+        required: true
+        schema:
+         type: integer
+      - name: id
+        in: query
+        required: true
+        schema:
+         type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: integer
+                nome:
+                  type: string
+                aberta:
+                   type: boolean
+        required: true
+      responses:
+        '200':
+           description: OK
+           content:
+            application/json:
+              schema:
+                  type: object
+                  properties:
+                    nome_cenario:
+                      type: string
+                    inicio:
+                      type: integer
+                    fim:
+                      type: integer
+                    Dispositivos:
+                      items:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id: 
+                              type: integer
+                            nome:
+                              type: string
+                            aberta:
+                              type: boolean
+        '405':
+          description: Invalid input
+  
+  /cenario{nome_cenario}/dispositivos/televisao/{id}:  
+    put:
+      summary: Altera o estado do dispositivo tipo televisao informado
+      description: realiza uma ação
+      operationId: atualizarDispositivotelevisao
+      parameters:
+      - name: nome_cenario
+        in: path
+        required: true
+        schema:
+         type: integer
+      - name: id
+        in: query
+        required: true
+        schema:
+         type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: integer
+                nome:
+                  type: string
+                
+                canal:
+                   type: integer
+                volume:
+                   type: integer
+                ligar:
+                  type: boolean
+        required: true
+      responses:
+        '200':
+           description: OK
+           content:
+            application/json:
+              schema:
+                  type: object
+                  properties:
+                    nome_cenario:
+                      type: string
+                    inicio:
+                      type: integer
+                    fim:
+                      type: integer
+                    Dispositivos:
+                      items:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id: 
+                              type: integer
+                            nome:
+                              type: string
+                            canal:
+                              type: integer
+                            volume:
+                              type: integer
+                            ligar:
+                              type: boolean
+        405:
+          description: Invalid input
+
+  /cenario/{nome_cenario}/dispositivos/som/{id}:  
+    put:
+      summary: Altera o estado do dispositivo tipo som informado
+      description: realiza uma ação
+      operationId: atualizarDispositivosom
+      parameters:
+      - name: nome_cenario
+        in: path
+        required: true
+        schema:
+         type: integer
+      - name: id
+        in: query
+        required: true
+        schema:
+         type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: integer
+                nome:
+                  type: string
+                volume:
+                   type: integer
+                estacao:
+                   type: integer
+                ligar:
+                  type: boolean
+        required: true
+      responses:
+        '200':
+           description: OK
+           content:
+            application/json:
+              schema:
+                  type: object
+                  properties:
+                    nome_cenario:
+                      type: string
+                    inicio:
+                      type: integer
+                    fim:
+                      type: integer
+                    Dispositivos:
+                      items:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id: 
+                              type: integer
+                            nome:
+                              type: string
+                            volume:
+                              type: integer
+                            canal:
+                              type: integer
+                            ligar:
+                              type: boolean
+        405:
+          description: Invalid input
+
+  /cenario/{nome_cenario}/dispositivos/arcondicionado/{id}:  
+    put:
+      summary: Altera o estado do dispositivo tipo arcondicionado informado
+      description: realiza uma ação
+      operationId: atualizarDispositivoarcondicionado
+      parameters:
+      - name: nome_cenario
+        in: path
+        required: true
+        schema:
+         type: integer
+      - name: id
+        in: query
+        required: true
+        schema:
+         type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: integer
+                nome:
+                  type: string
+                modo:
+                   type: integer
+                temperatura:
+                   type: integer
+                ligar:
+                  type: boolean
+        required: true
+      responses:
+        '200':
+           description: OK
+           content:
+            application/json:
+              schema:
+                  type: object
+                  properties:
+                    nome_cenario:
+                      type: string
+                    inicio:
+                      type: integer
+                    fim:
+                      type: integer
+                    Dispositivos:
+                      items:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id: 
+                              type: integer
+                            nome:
+                              type: string
+                            MODO:
+                              type: integer
+                            temperatura:
+                              type: integer
+                            ligar:
+                              type: boolean
+        405:
+          description: Invalid input
+  /cenario/{nome_cenario}/dispositivos/portao/{id}:  
+    put:
+      summary: Altera o estado do dispositivo tipo portao informado
+      description: realiza uma ação
+      operationId: atualizarDispositivoportao
+      parameters:
+      - name: nome_cenario
+        in: path
+        required: true
+        schema:
+         type: integer
+      - name: id
+        in: query
+        required: true
+        schema:
+         type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+                type: object
+                properties:
+                  nome_cenario:
+                    type: string
+                  Dispositivos:
+                    items:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          nome:
+                            type: string
+                          aberto:
+                            type: boolean
+      responses:
+        '200':
+           description: OK
+           content:
+            application/json:
+              schema:
+                  type: object
+                  properties:
+                    nome_cenario:
+                      type: string
+                    Dispositivos:
+                      items:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id: 
+                              type: integer
+                            nome:
+                              type: string
+                            aberto:
+                              type: boolean
+        405:
+          description: Invalid input
+
+
+
+
+
+
+
+
+
+
+   
