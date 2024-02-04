@@ -1,0 +1,1 @@
+## Este repositório é destinado a todos os projetos desenvolvidos durante o curso de Engenharia de Telecomunicação IFSC-SJ
